@@ -1,4 +1,4 @@
-const { network } = require("hardhat");
+const { network, ethers } = require("hardhat");
 const { developmentChains } = require("../helper-hardhat-config");
 const { verify } = require("../utils/verify");
 
@@ -6,9 +6,12 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   const { deploy, log } = deployments;
   const { deployer } = await getNamedAccounts();
 
-  args = [];
+  let tokenA, tokenB;
+  tokenA = await ethers.getContract("TokenA");
+  tokenB = await ethers.getContract("TokenB");
+  args = [tokenA.address, tokenB.address];
 
-  const token = await deploy("Encircled", {
+  const Cpamm = await deploy("CPAMM", {
     from: deployer,
     args: args,
     log: true,
