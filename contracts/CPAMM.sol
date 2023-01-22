@@ -54,19 +54,7 @@ contract CPAMM {
                 : (token1, token0, reserve1, reserve0);
 
         tokenIn.transferFrom(msg.sender, address(this), _amountIn);
-
-        /*
-        How many dy for dx?
-
-        xy = k
-        (x + dx)(y - dy) = k
-        y - dy = k / (x + dx)
-        y - k / (x + dx) = dy
-        y - xy / (x + dx) = dy
-        (yx + ydx - xy) / (x + dx) = dy
-        ydx / (x + dx) = dy
-        */
-        // 0.3% fee
+        
         uint amountInWithFee = (_amountIn * 997) / 1000;
         amountOut =
             (reserveOut * amountInWithFee) /
