@@ -75,21 +75,6 @@ contract CPAMM {
         token0.transferFrom(msg.sender, address(this), _amount0);
         token1.transferFrom(msg.sender, address(this), _amount1);
 
-        /*
-        How many dx, dy to add?
-
-        xy = k
-        (x + dx)(y + dy) = k'
-
-        No price change, before and after adding liquidity
-        x / y = (x + dx) / (y + dy)
-
-        x(y + dy) = y(x + dx)
-        x * dy = y * dx
-
-        x / y = dx / dy
-        dy = y / x * dx
-        */
         if (reserve0 > 0 || reserve1 > 0) {
             require(
                 reserve0 * _amount1 == reserve1 * _amount0,
@@ -97,56 +82,6 @@ contract CPAMM {
             );
         }
 
-        /*
-        How many shares to mint?
-
-        f(x, y) = value of liquidity
-        We will define f(x, y) = sqrt(xy)
-
-        L0 = f(x, y)
-        L1 = f(x + dx, y + dy)
-        T = total shares
-        s = shares to mint
-
-        Total shares should increase proportional to increase in liquidity
-        L1 / L0 = (T + s) / T
-
-        L1 * T = L0 * (T + s)
-
-        (L1 - L0) * T / L0 = s 
-        */
-
-        /*
-        Claim
-        (L1 - L0) / L0 = dx / x = dy / y
-
-        Proof
-        --- Equation 1 ---
-        (L1 - L0) / L0 = (sqrt((x + dx)(y + dy)) - sqrt(xy)) / sqrt(xy)
-        
-        dx / dy = x / y so replace dy = dx * y / x
-
-        --- Equation 2 ---
-        Equation 1 = (sqrt(xy + 2ydx + dx^2 * y / x) - sqrt(xy)) / sqrt(xy)
-
-        Multiply by sqrt(x) / sqrt(x)
-        Equation 2 = (sqrt(x^2y + 2xydx + dx^2 * y) - sqrt(x^2y)) / sqrt(x^2y)
-                   = (sqrt(y)(sqrt(x^2 + 2xdx + dx^2) - sqrt(x^2)) / (sqrt(y)sqrt(x^2))
-        
-        sqrt(y) on top and bottom cancels out
-
-        --- Equation 3 ---
-        Equation 2 = (sqrt(x^2 + 2xdx + dx^2) - sqrt(x^2)) / (sqrt(x^2)
-        = (sqrt((x + dx)^2) - sqrt(x^2)) / sqrt(x^2)  
-        = ((x + dx) - x) / x
-        = dx / x
-
-        Since dx / dy = x / y,
-        dx / x = dy / y
-
-        Finally
-        (L1 - L0) / L0 = dx / x = dy / y
-        */
         if (totalSupply == 0) {
             shares = _sqrt(_amount0 * _amount1);
         } else {
