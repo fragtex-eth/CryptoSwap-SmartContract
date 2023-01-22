@@ -103,39 +103,6 @@ contract CPAMM {
         external
         returns (uint amount0, uint amount1)
     {
-        /*
-        Claim
-        dx, dy = amount of liquidity to remove
-        dx = s / T * x
-        dy = s / T * y
-
-        Proof
-        Let's find dx, dy such that
-        v / L = s / T
-        
-        where
-        v = f(dx, dy) = sqrt(dxdy)
-        L = total liquidity = sqrt(xy)
-        s = shares
-        T = total supply
-
-        --- Equation 1 ---
-        v = s / T * L
-        sqrt(dxdy) = s / T * sqrt(xy)
-
-        Amount of liquidity to remove must not change price so 
-        dx / dy = x / y
-
-        replace dy = dx * y / x
-        sqrt(dxdy) = sqrt(dx * dx * y / x) = dx * sqrt(y / x)
-
-        Divide both sides of Equation 1 with sqrt(y / x)
-        dx = s / T * sqrt(xy) / sqrt(y / x)
-           = s / T * sqrt(x^2) = s / T * x
-
-        Likewise
-        dy = s / T * y
-        */
 
         // bal0 >= reserve0
         // bal1 >= reserve1
