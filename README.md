@@ -22,4 +22,4 @@ If a pool contains 10 ETH and 10,000 USDT, k would be 100,000. Swapping 1 ETH fo
 Although the basic AMM model is effective, it has limitations such as impermanent loss and low capital efficiency. Protocols like Uniswap v3, with its concentrated liquidity, and Uniswap v4, with enhanced performance and added features, have worked out more sophisticated versions to address these issues.
 
 ## Smart Contract Implementation
-A simple AMM implementation in Solidity can be found in this repositories, showcasing the integration of these principles into programmable code.
+A simple AMM implementation in Solidity can be found in this repository
